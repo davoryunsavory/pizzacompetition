@@ -18,8 +18,9 @@ public class Main {
 
         return output;
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(validateInput(sc, 4, "Error Try Again") + validateInput(sc, 4, "Error Try Again"));
+        
     }
 }
