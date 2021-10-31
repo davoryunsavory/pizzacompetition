@@ -1,52 +1,29 @@
+package main;
 import java.util.Scanner;
+import financelib.*;
 
 public class Main {
 
-    public static int validateInput(Scanner sc, int max, String errormessage, String promptquesiton) {
-        int output = 0;
-        do {
-            System.out.println(promptquesiton);
-
-            while (sc.hasNextInt() == false) {
-                System.out.println(errormessage);
-                sc.next();
-            }
-            output = sc.nextInt();
-        } while (output > max);
-
-        return output;
-    }
-
-    public static boolean validateUser(Scanner sc, String errormessage) {
-        String user = "admin";
-        String pass = "admin";
-        boolean active = true;
-        boolean valid = false;
-
-        
-
-        while (active == true) {
-            System.out.print("input username: ");
-            String inputUser = sc.nextLine();
-            System.out.print("input password: ");
-            String inputPass = sc.nextLine();
-            if (inputUser.equals(user) && inputPass.equals(pass)) {
-                active = false;
-                valid = true;
-            } else {
-                System.out.print(errormessage);
-            }
-        }        
-        return valid;
-    }
-
     public static void login(Scanner sc) {
         System.out.print("Would you like to login or register? (l or r) ");
-        if (sc.nextLine().equals("l")) {
-            if (validateUser(sc, "incorrect credentials try again\n") == true) {
+        String ans = sc.nextLine();
+        if (ans.equals("l")) {
+            if (validation.val_login(sc, "incorrect credentials try again\n", "passwords.txt", "usernames.txt") == true) {
                 System.out.println("You have logged in\n");
             }
+        } else if (ans.equals("r")) {
+            register(sc);
         }
+    }
+
+    public static void register (Scanner sc) {
+        System.out.print("Enter a username --> ");
+        String username = sc.nextLine();
+        System.out.print("Enter a password --> ");
+        String pass = sc.nextLine();
+        configure.append(username, "usernames.txt");
+        configure.append(encode.enc_pass(pass), "passwords.txt");
+        login(sc);
     }
 
     public static void border (int length) {
@@ -62,7 +39,7 @@ public class Main {
         System.out.println("1: Select Crust");
         System.out.println("2: Select Sauce");
         System.out.println("3: Select Toppings");
-        int option = validateInput(sc, 3, "Not an option", "Select between 1 - 3: ");
+        int option = validation.val_int(sc, 3, "Not an option", "Select between 1 - 3: ");
         System.out.print("\n");
         
         switch(option) {
@@ -84,7 +61,7 @@ public class Main {
         System.out.println("2: Gluten Free Crust");
         System.out.println("3: Return to Order Menu");
 
-        int option = validateInput(sc, 3, "Not an option", "Select between 1 - 3: ");
+        int option = validation.val_int(sc, 3, "Not an option", "Select between 1 - 3: ");
         System.out.print("\n");
 
         switch(option) {
@@ -108,11 +85,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String[] order = new String[5];
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome!");
         login(sc);
         order(sc);
+
     }
         
 }
