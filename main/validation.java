@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 import financelib.configure;
 import financelib.encode;
@@ -23,6 +24,25 @@ public class validation {
 
         return output;
     }
+
+
+   public static String val_pass (Scanner sc, String errormessage, String promptquestion) {
+       String newpass = null;
+       System.out.print("Enter a password --> ");
+       String pass = sc.nextLine();
+       do {
+        System.out.println(promptquestion);
+        while(sc.nextLine() != pass) {
+            System.out.println(errormessage);
+            sc.next();
+        }
+        newpass = sc.nextLine();
+    } while (newpass != pass);
+       return newpass;
+   }
+
+
+
     public static boolean val_login(Scanner sc, String errormessage, String filepassword, String fileusername) {
         boolean active = true;
         boolean valid = false;

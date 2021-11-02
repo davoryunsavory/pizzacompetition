@@ -1,8 +1,12 @@
 package main;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import financelib.*;
 
 public class Main {
+
+    public static List<String> order = new ArrayList<>();
 
     public static void login(Scanner sc) {
         System.out.print("Would you like to login or register? (l or r) ");
@@ -21,8 +25,8 @@ public class Main {
         String username = sc.nextLine();
         System.out.print("Enter a password --> ");
         String pass = sc.nextLine();
-        configure.append(username, "usernames.txt");
         configure.append(encode.enc_pass(pass), "passwords.txt");
+        configure.append(username, "usernames.txt");
         login(sc);
     }
 
@@ -39,7 +43,8 @@ public class Main {
         System.out.println("1: Select Crust");
         System.out.println("2: Select Sauce");
         System.out.println("3: Select Toppings");
-        int option = validation.val_int(sc, 3, "Not an option", "Select between 1 - 3: ");
+        System.out.println("4: See Current Order");
+        int option = validation.val_int(sc, 4, "Not an option", "Select between 1 - 4: ");
         System.out.print("\n");
         
         switch(option) {
@@ -49,6 +54,8 @@ public class Main {
                 break;
             case 3: orderToppings(sc);
                 break;
+            case 4: System.out.println(order);
+                order(sc);
         }
 
     }
@@ -66,8 +73,12 @@ public class Main {
 
         switch(option) {
             case 1: System.out.println("Regular Crust Added");
+            order.add("Regular Crust");
+            orderCrust(sc);
                 break;
             case 2: System.out.println("Gluten Free Crust Added");
+            order.add("Gluten Free Crust");
+            orderCrust(sc);
                 break;
             case 3: order(sc);;
                 break;
@@ -76,6 +87,30 @@ public class Main {
 
     public static void orderSauce(Scanner sc) {
         System.out.println("Entered Sauce");
+        border(50);
+        System.out.println("Options");
+        System.out.println("1: Red Sauce");
+        System.out.println("2: Garlic Sauce");
+        System.out.println("3: Balsamic Vineger");
+        System.out.println("4: Return to Order Menu");
+        int option = validation.val_int(sc, 4, "Not an option", "Select between 1 - 4: ");
+
+        switch (option) {
+            case 1: System.out.println("Red Sauce Added");
+            order.add("Red Sauce");
+            orderSauce(sc);
+            break;
+            case 2: System.out.println("Garlic Sauce Added");
+            order.add("Garlic Sauce");
+            orderSauce(sc);
+            break;
+            case 3: System.out.println("Balsamic Vineger Added");
+            order.add("Balsamic Vineger");
+            orderSauce(sc);
+            break;
+            case 4: order(sc);
+            break;
+        }
 
     }
 
